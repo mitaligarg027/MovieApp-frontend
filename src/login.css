@@ -1,0 +1,321 @@
+#box1 {
+    position: fixed;
+    /* margin: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center; */
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+    size: 35px;
+
+}
+
+.card-img-top {
+    width: 100%;
+    height: 81%;
+}
+
+.backArrow {
+    cursor: pointer;
+    filter: invert(100%);
+    width: 54px;
+    height: 52px;
+    margin-top: 20px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+#image_box {
+    border-style: dotted;
+    background: #38627c;
+    color: white;
+    text-align: center;
+    float: left;
+    margin-top: 2rem;
+    height: 20rem;
+    width: 20rem;
+    border-radius: 6px;
+    font-weight: lighter;
+    margin: 55px;
+
+}
+
+/* .drop_image {
+    display: none;
+} */
+
+.preview-image {
+    border-radius: 10px;
+    /* vertical-align: middle; */
+    height: 19.6rem;
+    width: 19.6rem;
+    margin-top: -10rem;
+    margin-left: 0rem;
+    border: transparent;
+    display: block;
+    /* z-index: 0; */
+}
+
+/* .preview-image-list {
+    border-radius: 10px;
+    height: 400px;
+    max-height: 100%;
+    width: auto;
+} */
+
+.card {
+    background-color: #092c39 !important;
+    border-radius: 12px;
+    margin-top: 10px;
+    overflow: hidden;
+    padding: 8px;
+    width: 282px;
+    height: 28rem;
+    box-sizing: border-box;
+    clear: left;
+}
+
+
+.icon {
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    margin-left: 0rem;
+    /* z-index: -1; */
+}
+
+/* .icon2 {
+    margin-top: 2rem;
+} */
+
+.plus {
+    width: 54px;
+    height: 52px;
+    filter: invert(100%);
+}
+
+.container {
+    color: white;
+}
+
+
+.fix {
+    position: fixed;
+    bottom: 0px;
+    left: 0%;
+    width: 100%;
+    /* float: left; */
+}
+
+.fix-My-Movies {
+    width: 100%;
+    bottom: 0px;
+    left: 0;
+    position: relative;
+    z-index: 0;
+}
+
+::placeholder {
+    background: #38627c;
+    color: white;
+    font-weight: lighter;
+
+}
+
+button {
+    text-align: center;
+    text-decoration: none;
+    /* display: inline block; */
+    border-radius: 6px;
+    color: white;
+    border: 2px solid transparent;
+    background-color: #04AA6D;
+    margin: 4px 2px;
+    padding: 7px 74px;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+}
+
+body {
+    background-color: #083545;
+
+}
+
+input {
+    border-radius: 6px;
+    margin: 3px;
+    background: #38627c;
+    border: 2px solid transparent;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    /* position: relative;
+    display: block; */
+    background-color: #092c39;
+    border-radius: 6px;
+}
+
+.editIcon {
+
+    color: white;
+    font-size: 24px;
+
+}
+
+
+
+.editDelete {
+    /* filter: invert(100%); */
+    width: 27px;
+    height: 27px;
+    /* background-color: #092c39; */
+}
+
+.editIcon:hover {
+    color: black !important;
+    background-color: white;
+    border-radius: 6px;
+}
+
+.deleteIcon:hover {
+    background-color: #fff;
+    border-radius: 6px;
+}
+
+.edit {
+    color: white;
+    font-size: 16px !important;
+}
+
+/* pagination buttons */
+
+
+.pagination>li>a:hover {
+
+    background-color: #092c39;
+    border-color: #092c39;
+    color: white
+}
+
+/* .pagination>li>.active */
+
+
+
+.pagination>.active>a:focus {
+    box-shadow: none;
+}
+
+.pagination>.numberButton:hover {
+    background-color: #04AA6D;
+    border-color: #04AA6D;
+}
+
+.pagination>li>a:focus {
+    box-shadow: none;
+
+}
+
+.active>.page-link {
+    background-color: #04AA6D !important;
+    border-color: #04AA6D;
+}
+
+.paginationButtons {
+    align-items: center;
+    margin-left: 41vw;
+    margin-bottom: 24px;
+}
+
+
+
+.prevButton,
+.nextButton {
+    font-weight: bolder;
+    /* background-color: #083545;
+    border-color: #083545; */
+    color: white !important;
+    /* margin: 4px 2px;
+    padding: 5px 0px; */
+}
+
+
+
+.page-link {
+    background-color: #092c39;
+    border-color: #092c39;
+    color: white;
+    border-radius: 6px;
+    margin: 4px 9px;
+    /* padding: 5px 12px; */
+}
+
+.firstButton,
+.secondButton {
+    margin: 4px 2px;
+    padding: 5px 12px;
+}
+
+/* media queries */
+@media (max-width:351px) {
+    .addMovieButton {
+        margin: 2px -48px;
+        padding: 5px 85px
+    }
+
+    nav {
+        margin: 2px -182px;
+        padding: 5px 85px
+    }
+
+    #image_box {
+
+        margin: 5px;
+    }
+
+    .Title input {
+        width: 98% !important;
+        margin-top: 1rem !important;
+    }
+
+    .Year input {
+        width: 98% !important;
+    }
+
+    .createMovieButton {
+        margin: 10px 5px;
+        padding: 4px 53px
+    }
+
+    .editMovieButton {
+        margin: 10px 2px;
+        padding: 4px 53px
+    }
+
+    .text-center img {
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+}
