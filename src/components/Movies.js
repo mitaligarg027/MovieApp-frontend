@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Movies = (props) => {
     const [isShown, setIsShown] = useState(false)
     let { poster, title, publishingYear, movieId, offset } = props;
+    // console.log("poster", poster)
     // if (loading) {
     //     return <h2>loading...</h2>
     // }
@@ -14,7 +15,7 @@ const Movies = (props) => {
     const [query, setquery] = useState("");
     // const [offset, setOffset] = useState(1);
     const [limit, setLimit] = useState(8);
-    const dataToPass = { movieId, title, publishingYear };
+    const dataToPass = { movieId, title, publishingYear, poster };
     // console.log(dataToPass)
     const myFunction = () => {
         setIsShown(!isShown);
@@ -40,8 +41,8 @@ const Movies = (props) => {
         result = await result.json();
         // setOffset()
         const response = await getData(item);
-        console.log("response", response)
-        console.log("offsetNo", offset)
+        // console.log("response", response)
+        // console.log("offsetNo", offset)
         if (response.status === "true") {
 
             props.setData(response?.movies)

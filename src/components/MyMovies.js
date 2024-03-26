@@ -26,15 +26,15 @@ const MyMovies = (props) => {
     const [data, setData] = useState([]);
     const [noOfPages, setNoOfPages] = useState(0);
     //get current posts
-    console.log(data.length)
+    // console.log(data.length)
     const indexOfLastPost = offset * data.length;
     const indexOfFirstPost = indexOfLastPost - limit;
-    console.log(indexOfFirstPost, indexOfLastPost)
-    console.log("dataGet", data)
+    // console.log(indexOfFirstPost, indexOfLastPost)
+    // console.log("dataGet", data)
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost); //posts on current page
-    console.log("currentpost", currentPosts)
+    // console.log("currentpost", currentPosts)
     const numbers = [...Array(noOfPages + 1).keys()].slice(1);
-    console.log("numbers", numbers)
+    // console.log("numbers", numbers)
 
 
     function prePage() {
@@ -51,9 +51,9 @@ const MyMovies = (props) => {
     }
     function changeCurrentPage(id) {
         setOffset(id)
-        console.log("prev", data)
-        console.log('prroffset', offset);
-        console.log('prrlimit', limit);
+        // console.log("prev", data)
+        // console.log('prroffset', offset);
+        // console.log('prrlimit', limit);
     }
 
     async function fetchInfo() {
@@ -63,11 +63,11 @@ const MyMovies = (props) => {
         // const token = userData?.data?.token;
         let item = { offset, limit };
         let result = await getData(item)
-        console.log("data1", data)
-        console.log("result", result)
+        // console.log("data1", data)
+        // console.log("result", result)
 
         if (result.status) {
-            console.log("movies", result.allMovies)
+            // console.log("movies", result.allMovies)
             setData(result.movies)
             console.log("data2", data)
             setLoading(false)
@@ -75,8 +75,8 @@ const MyMovies = (props) => {
         setNoOfPages(result.pages)
 
     }
-    console.log("pagesno", noOfPages)
-    console.log("finalData", data)
+    // console.log("pagesno", noOfPages)
+    // console.log("finalData", data)
 
     useEffect(() => {
         fetchInfo();

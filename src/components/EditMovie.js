@@ -2,21 +2,23 @@ import React, { useState } from 'react'
 import { useRef } from 'react'
 import Vector from '../images/Vectors.svg'
 import { Link, useLocation } from 'react-router-dom'
+import drop from '../images/Drop.svg'
 // import image1 from '../images/image1.png'
 import '../login.css'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 // import MyMovies from './MyMovies'
 const EditMovie = (props) => {
     const location = useLocation();
     const propsData = location.state;
-    // console.log('propsdata', propsData)
+    console.log('propsdata', propsData)
     const movieId = propsData.movieId;
     const currentYear = new Date().getFullYear();
     const [title, setTitle] = useState(propsData.title);
     const [publishingYear, setPublishingYear] = useState(propsData.publishingYear);
-    const [img, setImg] = useState("");
+    const [poster, setPoster] = useState(propsData.poster);
     const [message, setMessage] = useState("");
     const [file, setFile] = useState();
     const fileInputRef = useRef(null);
@@ -43,16 +45,24 @@ const EditMovie = (props) => {
 
         const userData = JSON.parse(localStorage.getItem('user-info'));
         const token = userData?.token;
+        console.log("posterimage", poster)
+        // console.log(req)
+        const formData = new FormData();
+        formData.append('movieId', movieId)
+        formData.append('title', title)
+        formData.append('publishingYear', publishingYear)
 
-        let item = { movieId, title, publishingYear };
+        formData.append('poster', poster)
+        // let item = { movieId, title, publishingYear };
+        console.log("hii")
         let result = await fetch("http://localhost:3000/api/movie/editMovie", {
             method: 'PATCH',
             headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
+                // "Content-Type": "application/json",
+                // "Accept": "application/json",
                 "Authorization": `Bearer ${token} `
             },
-            body: JSON.stringify(item)
+            body: formData
         });
         result = await result.json();
         // console.log('result', item)
@@ -81,8 +91,8 @@ const EditMovie = (props) => {
     function handleChange(e) {
         // const selectedFile = e.target.files[0];
         let new_Img = e.target.value;
-        setImg(new_Img);
-        console.log(e.target.files);
+        setPoster(e.target.files[0]);
+        console.log("file", e.target.files[0]);
         setIsShown(true);
         setIsDropImageShown(false)
         setFile(URL.createObjectURL(e.target.files[0]));
@@ -107,9 +117,10 @@ const EditMovie = (props) => {
                                 style={{ display: "none" }}
                                 onChange={handleChange}
                                 accept="image/*"
+                            // value={propsData?.poster}
                             />
-                            {isDropImageShown && <img className='preview-image' style={{ cursor: "pointer" }}
-                                onClick={handleImageClick} alt='' />}
+                            {isDropImageShown && <img className='preview-image' src={propsData.poster} style={{ cursor: "pointer" }}
+                                onClick={handleImageClick} alt={drop} />}
                             {isShown && <img className='preview-image ' src={file} alt="" onClick={handleImageClick} />}
                             {/* {isDropImageShown && <p className='drop_image' >Drop an image here</p>} */}
                         </div>
