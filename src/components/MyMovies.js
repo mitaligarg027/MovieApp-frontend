@@ -2,39 +2,55 @@ import React, { useEffect, useState } from 'react'
 import Vector from '../images/Vectors.svg'
 import load from "../images/loading-gif.gif";
 import { useNavigate } from 'react-router-dom'
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import logout from '../images/logout.svg'
 import plus_sign from '../images/Circled_plus.svg.png'
 import '../login.css'
 import Movies from './Movies.js'
 import { Link } from 'react-router-dom'
 import { getData } from '../utils/index.js'
-// import { off } from 'rsuite/esm/DOMHelper/index.js'
+
 const MyMovies = (props) => {
 
 
     const navigate = useNavigate();
-    function HandleLogout() {
+
+    async function HandleLogout() {
+        const userData = JSON.parse(localStorage.getItem('user-info'));
+        const token = userData?.token;
         // sessionStorage.clear();
-        localStorage.clear();
-        navigate('/');
+        // localStorage.clear();
+        let result = await fetch('http://localhost:3000/api/user/deleteUser', {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `Bearer ${token} `
+            }
+
+        })
+        result = await result.json();
+        if (result.status === 'true') {
+            localStorage.removeItem('user-info')
+            navigate('/');
+            toast.success(result.message)
+        }
+        else {
+            toast.error(result.message)
+        }
+
+
     }
-    // const [query, setquery] = useState("");
+
     const [loading, setLoading] = useState(true);
     const [offset, setOffset] = useState(1);//current page
     const [limit, setLimit] = useState(8);//posts per page
     const [data, setData] = useState([]);
+    const [query, setQuery] = useState("");
     const [noOfPages, setNoOfPages] = useState(0);
-    //get current posts
-    // console.log(data.length)
-    const indexOfLastPost = offset * data.length;
-    const indexOfFirstPost = indexOfLastPost - limit;
-    // console.log(indexOfFirstPost, indexOfLastPost)
-    // console.log("dataGet", data)
-    const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost); //posts on current page
-    // console.log("currentpost", currentPosts)
+    const [showpagination, setShowPagination] = useState(true)
+
     const numbers = [...Array(noOfPages + 1).keys()].slice(1);
-    // console.log("numbers", numbers)
+
 
 
     function prePage() {
@@ -51,9 +67,7 @@ const MyMovies = (props) => {
     }
     function changeCurrentPage(id) {
         setOffset(id)
-        // console.log("prev", data)
-        // console.log('prroffset', offset);
-        // console.log('prrlimit', limit);
+
     }
 
     async function fetchInfo() {
@@ -63,24 +77,68 @@ const MyMovies = (props) => {
         // const token = userData?.data?.token;
         let item = { offset, limit };
         let result = await getData(item)
-        // console.log("data1", data)
-        // console.log("result", result)
+
 
         if (result.status) {
-            // console.log("movies", result.allMovies)
+
             setData(result.movies)
-            console.log("data2", data)
+
             setLoading(false)
         }
         setNoOfPages(result.pages)
 
     }
-    // console.log("pagesno", noOfPages)
-    // console.log("finalData", data)
+    function handleChange(e) {
+        setQuery(e.target.value)
+
+    }
+    async function handleSearch(e) {
+
+        e.preventDefault()
+
+        const userData = JSON.parse(localStorage.getItem('user-info'));
+        const token = userData?.token;
+
+        let item = { query }
+        if (query !== '') {
+
+            setShowPagination(false);
+            setLoading(true)
+            let result = await fetch('http://localhost:3000/api/movie/searchMovie', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${token} `
+
+                },
+                body: JSON.stringify(item)
+            });
+            result = await result.json();
+
+
+            if (result.status === 'true') {
+
+                setData(result.movies);
+                setLoading(false)
+            }
+            else {
+                setLoading(false);
+                toast.error(result.message)
+            }
+
+
+        }
+        else {
+            setShowPagination(true)
+            fetchInfo()
+        }
+    }
+
 
     useEffect(() => {
         fetchInfo();
-        // console.log("res", res)
+
     }, [offset])
 
     return (
@@ -93,6 +151,14 @@ const MyMovies = (props) => {
                     </span></p>
 
             </div>
+            <div className='container' >
+
+                <form action="">
+                    <input type="text" name='search' id='search' placeholder='search movie here' onChange={handleChange} />
+                    <button type='submit' onClick={handleSearch} >Search</button>
+                </form>
+
+            </div>
 
             {loading ?
                 <div className="text-center">
@@ -102,28 +168,28 @@ const MyMovies = (props) => {
                         src={load}
                         alt="loading..."
                     />
-                </div> : <div className="container movies my-3">
-                    <div className="row">
-                        {data.map((value, index) => {
-                            return (
-                                <div className="col-lg-3" key={index}>
-                                    <Movies poster={value.poster} title={value.title} publishingYear={value.publishingYear} movieId={value._id} setData={setData} loading={loading} offset={offset}
-                                    />
-                                </div>
-                            )
-                        }
-                        )}
+                </div> :
+                <>
+
+                    <div className="container movies my-3">
+
+                        <div className="row">
+                            {data.map((value, index) => {
+                                return (
+                                    <div className="col-lg-3" key={index}>
+                                        <Movies poster={value.poster} title={value.title} publishingYear={value.publishingYear} movieId={value._id} setData={setData} loading={loading} offset={offset}
+                                        />
+                                    </div>
+                                )
+                            }
+                            )}
+
+                        </div>
 
                     </div>
+                </>}
 
-                </div>}
-            {/* <div className="container paginationButtons">
-                <button className='prevButton'>prev</button>
-                <button className='firstButton'>1</button>
-                <button className='secondButton'>2</button>
-                <button className='nextButton'>next</button>
-            </div> */}
-            {!loading && <nav>
+            {!loading && showpagination && <nav >
                 <ul className="pagination paginationButtons">
                     <li className="page-item">
                         <Link style={{
@@ -147,7 +213,7 @@ const MyMovies = (props) => {
                         }} className='page-link nextButton' onClick={nextPage}>Next</Link>
                     </li>
                 </ul>
-            </nav>}
+            </nav >}
             <img src={Vector} className={` ${loading ? 'fix' : 'fix-My-Movies'}`} alt="logo" />
         </>
     )

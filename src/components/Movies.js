@@ -7,16 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 const Movies = (props) => {
     const [isShown, setIsShown] = useState(false)
     let { poster, title, publishingYear, movieId, offset } = props;
-    // console.log("poster", poster)
-    // if (loading) {
-    //     return <h2>loading...</h2>
-    // }
-    // console.log(title, publishingYear, movieId)
     const [query, setquery] = useState("");
     // const [offset, setOffset] = useState(1);
     const [limit, setLimit] = useState(8);
     const dataToPass = { movieId, title, publishingYear, poster };
-    // console.log(dataToPass)
+
     const myFunction = () => {
         setIsShown(!isShown);
 
@@ -25,7 +20,7 @@ const Movies = (props) => {
     const userData = JSON.parse(localStorage.getItem('user-info'));
     const token = userData?.token;
     async function handleDelete() {
-        // console.log("abcd")
+
 
         let item = { query, offset, limit };
         let result = await fetch("http://localhost:3000/api/movie/deleteMovie",
@@ -41,8 +36,7 @@ const Movies = (props) => {
         result = await result.json();
         // setOffset()
         const response = await getData(item);
-        // console.log("response", response)
-        // console.log("offsetNo", offset)
+
         if (response.status === "true") {
 
             props.setData(response?.movies)
@@ -72,9 +66,7 @@ const Movies = (props) => {
                             marginTop: "-8px"
                         }}
                     >
-                        {/* <Link to='/editMovie' >
-                            <span className="badge rounded-circle bg-dark">...</span>
-                        </Link> */}
+
 
                         <div className="">
                             <button className='badge rounded-circle bg-dark' onClick={myFunction} >...</button>

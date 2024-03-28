@@ -13,7 +13,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const EditMovie = (props) => {
     const location = useLocation();
     const propsData = location.state;
-    console.log('propsdata', propsData)
     const movieId = propsData.movieId;
     const currentYear = new Date().getFullYear();
     const [title, setTitle] = useState(propsData.title);
@@ -27,11 +26,11 @@ const EditMovie = (props) => {
 
     const [isShown, setIsShown] = useState(false);
     const [isDropImageShown, setIsDropImageShown] = useState(true);
-    console.log(title);
+
     function handleTitle(event) {
         let new_Title = event.target.value;
         setTitle(new_Title);
-        console.log(new_Title)
+
 
     }
     function handleYear(event) {
@@ -39,22 +38,18 @@ const EditMovie = (props) => {
         setPublishingYear(new_Year);
 
     }
-    // console.log(title, publishingYear)
+
     async function handleSubmit(e) {
         e.preventDefault();
 
         const userData = JSON.parse(localStorage.getItem('user-info'));
         const token = userData?.token;
-        console.log("posterimage", poster)
-        // console.log(req)
         const formData = new FormData();
         formData.append('movieId', movieId)
         formData.append('title', title)
         formData.append('publishingYear', publishingYear)
 
         formData.append('poster', poster)
-        // let item = { movieId, title, publishingYear };
-        console.log("hii")
         let result = await fetch("http://localhost:3000/api/movie/editMovie", {
             method: 'PATCH',
             headers: {
@@ -65,20 +60,15 @@ const EditMovie = (props) => {
             body: formData
         });
         result = await result.json();
-        // console.log('result', item)
-        // setTitle(title);
 
         if (title === "" || title == null) {
-            console.log(title)
             setMessage("Title is required")
-            console.log(message)
         }
         if (publishingYear === "" || publishingYear == null) {
             setMessage("Year is required")
         }
         else if (result.status === "true") {
 
-            // localStorage.setItem("movies", JSON.stringify(result))
 
             navigate('/my_movies');
             toast.success(result.message)
@@ -92,7 +82,7 @@ const EditMovie = (props) => {
         // const selectedFile = e.target.files[0];
         let new_Img = e.target.value;
         setPoster(e.target.files[0]);
-        console.log("file", e.target.files[0]);
+
         setIsShown(true);
         setIsDropImageShown(false)
         setFile(URL.createObjectURL(e.target.files[0]));

@@ -31,12 +31,9 @@ const Login = () => {
 
 
     async function handleLogin(event) {
-
-
-        // console.log(email, password)
         event.preventDefault()
         let item = { email, password };
-        console.log("item", item)
+
         try {
             let result = await fetch("http://localhost:3000/api/user/login", {
                 // mode: 'cors',
@@ -50,7 +47,6 @@ const Login = () => {
 
             result = await result.json();
 
-            console.log("resultst", result)
 
             // navigate('/AddMovie');
             if (email === "" || email == null) {
@@ -60,8 +56,7 @@ const Login = () => {
                 setMessageP("Password is required")
             }
             else if (result.status === "true") {
-                console.log("result status", result.status)
-                // alert("sca")
+
                 localStorage.setItem("user-info", JSON.stringify(result))
 
                 navigate('/AddMovie');

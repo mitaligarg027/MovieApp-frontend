@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const CreateMovie = () => {
     const currentYear = new Date().getFullYear();
-    // console.log(currentYear)
+
     const [title, setTitle] = useState("");
     const [publishingYear, setPublishingYear] = useState("");
     const [poster, setPoster] = useState("");
@@ -42,15 +42,12 @@ const CreateMovie = () => {
         const userData = JSON.parse(localStorage.getItem('user-info'));
         const token = userData?.token;
 
-        // console.log('token', token);
         const formData = new FormData();
         formData.append('title', title)
         formData.append('publishingYear', publishingYear)
         formData.append('poster', poster)
-        console.log(title, publishingYear, poster)
 
-        // let item = { title, publishingYear, poster };
-        // console.log('item', item,poster.name)
+
         let result = await fetch("http://localhost:3000/api/movie/addMovie", {
             method: 'POST',
             headers: {
@@ -61,7 +58,7 @@ const CreateMovie = () => {
             body: formData
         });
         result = await result.json();
-        console.log('result0', result.message)
+
 
         // navigate('/my_movies');
         if (title === "" || title == null) {
@@ -82,23 +79,21 @@ const CreateMovie = () => {
 
         }
         else {
-            // console.error("Login failed");
+
             toast.error(result.message);
         }
 
 
     }
     function handleChange(e) {
-        // const selectedFile = e.target.files[0];
-        console.log("filevalue", e.target.value)
+
+
         let new_Img = e.target.value;
-        // setPoster(new_Img);
         setPoster(e.target.files[0])
-        console.log("files", e.target.files[0]);
         setIsShown(true);
         setIsDropImageShown(false)
         setFile(URL.createObjectURL(e.target.files[0]));
-        // console.log("filesystem", file)
+
     }
     function handleImageClick(event) {
         // Trigger the click event on the file input
